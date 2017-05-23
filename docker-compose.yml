@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+    ui-proxy:
+        build: ./ui-proxy
+        image: fi/ui-proxy
+        container_name: ui-proxy
+        links:
+          - layout-service
+          - home-ui
+          - mail-ui
+        ports:
+          - "80:80"
+    
+    layout-service:
+          build: ./layout-service
+          image: fi/layout-service
+          container_name: layout-service
+          volumes:
+              - ./layout-service/static/:/static/
+          #environment:
+          #  - VIRTUAL_HOST=layout-service.local.dev
+          
+    home-ui:
+          build: ./home-ui
+          image: fi/home-ui
+          container_name: home-ui
+          volumes:
+              - ./home-ui/:/usr/share/nginx/html/
+          #environment:
+          #  - VIRTUAL_HOST=home-ui.local.dev
+          
+    mail-ui:
+          build: ./mail-ui
+          image: fi/mail-ui
+          container_name: mail-ui
+          #environment:
+          #  - VIRTUAL_HOST=mail-ui.local.dev

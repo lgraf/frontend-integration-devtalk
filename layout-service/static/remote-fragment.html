@@ -1,0 +1,27 @@
+<script> 
+(function() {
+    var FragmentPrototype = Object.create( HTMLElement.prototype );
+    
+    FragmentPrototype.attachedCallback = function() {
+        this.appendContent( this.getAttribute( 'ref' ) );
+    }
+    
+    FragmentPrototype.appendContent = function( ref ) {
+        var link = document.createElement( 'link' );
+        link.rel = "import";
+        link.href = ref;
+        
+        var element = this;
+        link.onload = function processImportedDocument() {
+            var doc = this.import;
+            element.appendChild( doc.querySelector( 'body' ).children[0] );
+        }
+        
+        document.head.appendChild( link );
+    }
+    
+    document.registerElement( 'remote-fragment', {
+        prototype: FragmentPrototype
+    } );
+}())
+</script>

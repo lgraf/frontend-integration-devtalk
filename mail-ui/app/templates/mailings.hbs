@@ -1,0 +1,7 @@
+<h2>Mailings</h2>
+{{#each model as |mailing|}}
+  {{#link-to 'mailing' mailing.id}}{{mailing.name}}{{/link-to}}<br/>
+{{/each}}
+<br/>
+<a href="/">home</a>
+{{outlet}}

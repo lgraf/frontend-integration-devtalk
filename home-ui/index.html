@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>home</title>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.24/webcomponents.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"></script>
+    
+    <link rel="stylesheet" href="/layout/style.css"/>
+    <link rel="import" href="/layout/remote-fragment.html"/>
+  </head>
+  
+  <body>
+    <remote-fragment ref="/layout/header.html"></remote-fragment>
+    
+    <div id="content" class="content">
+        <h2>Home</h2>
+        <a href="/mail/mailings/2">Show last created mailing</a><br/>
+        <br/>
+        <div class="font-small">This is static content served by <a href="https://nginx.org" target="_blank">nginx</a></div>
+    </div>
+    
+    <remote-fragment ref="/layout/footer.html"></remote-fragment>
+  </body>
+</html>

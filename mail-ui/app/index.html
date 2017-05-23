@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>mail</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  {{content-for "head"}}
+
+  <link rel="stylesheet" href="{{rootURL}}assets/vendor.css">
+  <link rel="stylesheet" href="{{rootURL}}assets/mail-ui.css"> 
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"></script>
+  
+  <link rel="stylesheet" href="/layout/style.css"/>
+  <link rel="import" href="/layout/remote-fragment.html"/>
+  
+  {{content-for "head-footer"}}
+</head>
+
+<body>
+  {{content-for "body"}}
+
+  <remote-fragment ref="/layout/header.html"></remote-fragment>
+
+  <div id="mail-ui" class="content"></div>
+
+  <remote-fragment ref="/layout/footer.html"></remote-fragment>
+
+  <script src="{{rootURL}}assets/vendor.js"></script>
+  <script src="{{rootURL}}assets/mail-ui.js"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.24/webcomponents.min.js"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+
+  {{content-for "body-footer"}}
+</body>
+
+</html>

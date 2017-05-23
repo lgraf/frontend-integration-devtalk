@@ -1,0 +1,321 @@
+<!doctype html>
+<html>
+	<head>
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/solarized.css">
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+		
+		<style>
+			.green {color:green;}
+			.red {color:red;}
+			.orange {color:orange;}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+                    <h2>Frontend Integration</h2>
+                </section>
+                
+				<section data-markdown>
+					<textarea data-template>
+					### Inhalt
+					* Hintergrund
+					* Herausforderungen
+					* Konzepte und Technologie
+					* Fazit und Diskussion
+					<aside class="notes">
+						High level - Zusammenführen von verteilten ui's  
+						Keine verwandten Themen wie ui library, shared assets  
+					</aside>
+					</textarea>
+				</section>
+                
+				<section data-markdown>
+                    <textarea data-template>
+                    ### Hintergrund 
+                    * UI ist der zentrale Kontaktpunkt mit dem Kunden
+                    * Konzepte um verteilte (Web) UI's zu integrieren
+                    <aside class="notes">
+						Bild für den User - Egal wie toll die Architekur ist  
+                        Einheitlich, modern, "aus einem Guß"  
+                    </aside>
+                    </textarea>
+                </section>
+				
+				
+				<section data-markdown>
+                    <textarea data-template>
+                    ### Herausforderungen
+                    * Frankenstein UX
+                    * Micro Service/<a href="https://speakerdeck.com/rstrangh/self-contained-systems-1?slide=23" target="_blank">SCS</a> Praktiken auf das Frontend übertragen
+                    <aside class="notes">
+                        Cross domain UX  
+                        Autonomy, development/deployment, technology   
+						Backend == Frontend (Kritik an micro service arch)  
+						SCS: Separation of the functionality into independent webapplications   
+                    </aside>
+                    </textarea>
+                </section>
+				
+				<section data-markdown>
+					<textarea data-template>
+					### Transclusion
+					Beispiel: Einheitliches Layout (Header, Navigation, etc.)
+					<img data-src="/img/transclusion-common.png" style="border-width: 2px;"/>
+					<aside class="notes">
+						Frankenstein: "nahtlos"  
+						Beispiel:  
+						Common parts (gleiche navigation, user informationen)
+					</aside>
+					</textarea>
+				</section>
+				
+				<section data-markdown>
+					<textarea data-template>
+					### Probleme Transclusion
+					* Web ist Dokumenten orientiert
+					* (Noch) keine Standards im Web/Browsern 
+					<aside class="notes">
+						welcome to the wonderful world of distributed fragments (and how to mix it)  
+					</aside>
+					</textarea>
+				</section>
+				
+				<section data-markdown>
+					<textarea data-template>
+					### Ansätze
+					* iframe
+					* framework (X.js engines)
+					* server (SSI/ESI)
+					* client (ajax/webcomponents)
+					* build time
+					<aside class="notes">
+						Kurzes pro/con für build time  
+					</aside>
+					</textarea>
+				</section>
+				
+				<section>
+					<section data-markdown>
+						<textarea data-template>
+						### iframe
+						<img data-src="/img/iframe.png"/>  
+						<span class="green">strikte trennung</span>  
+						<span class="red">schwer nahtlos zu integrieren</span>  
+						<span class="red">kommunikation umständlich</span>  
+						<span class="red">back button</span>  
+						<aside class="notes">
+							Seperation - js, css - own document  
+							Toolbox!  
+						</aside>
+						</textarea>
+					</section>
+					
+					<section>
+						<pre><code data-trim>
+							&lt;!DOCTYPE html&gt;
+							&lt;html&gt;
+							  &lt;head&gt;...&lt;/head&gt;
+							  &lt;body&gt;
+							    ... header, navigation ...
+							    
+							    &lt;iframe src="https://platform.company.de/mail"&gt;
+							    
+							    ... footer ...
+							  &lt;/body&gt;
+							&lt;/html&gt;
+						</code></pre>
+					</section>
+				</section>
+				
+				<section>
+					<section data-markdown>
+						<textarea data-template>
+						### framework (X.js engines)
+						<img data-src="/img/engine.png"/>  
+						<span class="green">footprint (assets, framework code, etc.)</span>  
+						<span class="green">Eine Technologie</span>  
+						<span class="orange">Build Zeit Abhängigkeit</span>  
+						<span class="red">Keine Technologie Autonomie</span>  
+						<aside class="notes">
+						    Schadet Autonomie (tech freedom/innovation, deployment)  
+							Right tool, for the right job - ember for everything  
+							Conceptional smell!  
+						</aside>
+						</textarea>
+					</section>
+					
+					<section>
+						<pre><code data-trim>
+							"dependencies": {
+							  "maileditor-engine": "1.2.3"
+							}
+						</code></pre>
+						<pre><code data-trim>
+							this.mount( 'maileditor-engine', { path: '/mail' } );
+						</code></pre>
+						<a href="https://github.com/ember-engines/ember-engines">https://github.com/ember-engines/ember-engines</a>
+					</section>
+				</section>
+				
+				<section>
+					<section data-markdown>
+						<textarea data-template>
+						### Server Side (ESI/SSI)
+						<img data-src="/img/server-side.png"/>  
+						<span class="green">SEO friendly</span>  
+						<span class="green">DRY (Deklarativ, Resilienz, Caching)</span>  
+						<span class="green">Orchestrierung von internet requests</span>  
+						<span class="orange">Verwaltung/Konfiguration des Services (SPOF)</span>  
+						<span class="red">Response Zeit abhängig von einzelnen backends</span>  
+						<aside class="notes">
+							Notwendig für SEO  
+							Gut für mobile (minimierung von requests)  	
+							Gute resilience Eigenschaften (latest cached fragment)  
+							varnish, compoxure, mosiac9  
+							Umkehrung -> Pages gehören Domänen  
+						</aside>
+						</textarea>
+					</section>
+					
+					<section style="font-size:0.7em;">
+						<pre><code data-trim>
+							&lt;!DOCTYPE html&gt;
+							&lt;html&gt;
+							  &lt;head&gt;...&lt;/head&gt;
+							  &lt;body&gt;
+							    <div cx-url="https://platform.company.de/header" cx-timeout='1s' cx-cache-ttl='10s'>
+							      This content will be replaced on the way through ...
+							    </div>
+							    
+							    Domänen Inhalt (Server Side, SPA, etc.)
+							
+							    <div cx-url="https://platform.company.de/footer" cx-timeout='1s' cx-cache-ttl='1h'>
+							      Default content can be placed here, in case of errors ...
+							    </div>
+							  &lt;/body&gt;
+							&lt;/html&gt;
+						</code></pre>
+						<a href="https://github.com/tes/compoxure">https://github.com/tes/compoxure</a>
+					</section>
+				</section>
+				
+				<section>
+					<section data-markdown>
+						<textarea data-template>
+						### Client Side (ajax/<a href="http://jonrimmer.github.io/are-we-componentized-yet/" target="_blank">webcomponents</a>)
+						<img data-src="/img/client-side.png"/>  
+						<span class="green">Nutzung der Browserplattform (pollyfills)</span>  
+						<span class="green">DRY (Deklarativ, Resilienz, Caching)</span>  
+						<span class="green">(Keine Abhängigkeiten)</span>  
+						<span class="red">Mehrere internet requests</span>  
+						<span class="red">footprint (framework code)</span>  
+						<aside class="notes">
+							Header, Footer, etc. nicht ideal wegen Caching! (WC!)  
+							Kein mobile, kein SEO -> client side ok!  
+							H2 sollte situation verbessern  
+						</aside>
+						</textarea>
+					</section>
+					
+					<section>
+						<section style="font-size:0.7em;">
+							<pre><code data-trim>
+								<script> 
+								(function() {
+								    var FragmentPrototype = Object.create( HTMLElement.prototype );
+								    
+								    FragmentPrototype.attachedCallback = function() {
+								        this.appendContent( this.getAttribute( 'ref' ) );
+								    }
+								    
+								    FragmentPrototype.appendContent = function( ref ) {
+								        $(this).load( ref );
+								    }
+								    
+								    document.registerElement( 'x-fragment', {
+								        prototype: FragmentPrototype
+								    } );
+								}())
+								</script>
+							</code></pre>
+							
+							<pre><code data-trim>
+								&lt;!DOCTYPE html&gt;
+								&lt;html&gt;
+								  &lt;head&gt;...&lt;/head&gt;
+								  &lt;body&gt;
+								    <x-fragment ref="https://platform.company.de/header"></x-fragment>
+								    
+								    Domänen Inhalt (Server Side, SPA, etc.)
+								
+								    <x-fragment ref="https://platform.company.de/footer"></x-fragment>
+								  &lt;/body&gt;
+								&lt;/html&gt;
+							</code></pre>
+							<a href="https://www.innoq.com/de/blog/transclusion">https://www.innoq.com/de/blog/transclusion/</a>
+						</section>
+					</section>
+				</section>
+				
+				<section data-markdown>
+					<textarea data-template>
+						### Fazit
+						* Fragmente/Glue technologie neutral halten
+						* Resoure orientiert UI's
+						* Nicht dogmatisch sein
+						* No free lunch
+						<aside class="notes">
+							Embrace the webplatform (HJA) - (APP in APP hard) keeps options open  
+							Deep linking (a href) - back button   
+							Right tool for the right job  
+							Scenarios:  
+							 - static/dynamic (content/interaction)  
+							 - critical/NTH   (functional impact)  
+							frontend === backend  
+							Long run - already accepted in the backend  
+							Gradwanderung: Komplexität vs. Nutzen!  
+						</aside>
+					</textarea>
+				</section>
+				
+				<section data-markdown>
+					<textarea data-template>
+						### Demo
+						<a href="http://localhost" target="_blank">Demo</a>
+						<aside class="notes">
+							Kleine app ...  
+							Push state  
+							
+						</aside>
+					</textarea>
+				</section>
+				
+				<section data-markdown>
+					<textarea data-template>
+						### Demo Architektur
+						<img data-src="/img/demo.png"/>  
+						<aside class="notes">
+							proxy: url, sop  
+						</aside>
+					</textarea>
+				</section>
+			</div>
+		</div>
+        
+        <script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+		<script>
+			Reveal.initialize({
+                dependencies: [
+					{ src: 'plugin/markdown/marked.js',   condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/notes/notes.js', async: true }
+				]
+            });
+		</script>
+	</body>
+</html>
