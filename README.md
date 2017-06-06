@@ -17,7 +17,7 @@ If it is not possible to work around this flickering, it should be discussed if 
 *   `layout-service` delivers common fragments (header, footer), global styles and custom webcomponents.
 *   `home-ui` delivers the 'home' domain page (static HTML).
 *   `mail-ui` delivers the 'mail' domain page (ember.js).
-*   `presentation` contains the dev-talk presentation.
+*   `presentation` contains the dev-talk presentation ([Slides](presentation/frontend-integration.pdf)).
 <br/>
 <hr/>
 <br/>

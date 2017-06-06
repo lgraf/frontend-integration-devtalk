@@ -5,6 +5,15 @@
 		<link rel="stylesheet" href="css/theme/solarized.css">
 		<link rel="stylesheet" href="lib/css/zenburn.css">
 		
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+		
 		<style>
 			.green {color:green;}
 			.red {color:red;}
@@ -316,6 +325,7 @@
                     { src: 'plugin/notes/notes.js', async: true }
 				]
             });
+			Reveal.configure({ pdfMaxPagesPerSlide: 1 });
 		</script>
 	</body>
 </html>
